@@ -2,9 +2,8 @@
 Better commands for checking RHEL 7 STIGs
 
 ## v-71849
-```
-files=($(for i in `rpm -Va | grep '^.M' | cut -d " " -f4,5`;do for j in `rpm -qf $i`;do rpm -ql $j --dump | cut -d " " -f1,5,6,7 | grep $i | awk '{print $1}';done;done;));packages=();for i in "${files[@]}"; do package=$(rpm -qf "$i");packages+=("$package"); done;sorted_packages=($(echo "${ids[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '));for j in "${sorted_packages[@]}"; do rpm --setperms "$j"; rpm -setugids "$j"; done;
-```
+`files=($(for i in `rpm -Va | grep '^.M' | cut -d " " -f4,5`;do for j in `rpm -qf $i`;do rpm -ql $j --dump | cut -d " " -f1,5,6,7 | grep $i | awk '{print $1}';done;done;));packages=();for i in "${files[@]}"; do package=$(rpm -qf "$i");packages+=("$package"); done;sorted_packages=($(echo "${ids[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '));for j in "${sorted_packages[@]}"; do rpm --setperms "$j"; rpm -setugids "$j"; done;`
+
 
 ## v-72033
 `ls -al /home/*/.* | grep "./" | grep -v "/.:\|/..:\|mozilla"| awk '{print "chmod 0740 "$9";"}'`
