@@ -4,9 +4,11 @@ Better commands for checking RHEL 7 STIGs
 ## v-71849
 `files=($(for i in `rpm -Va | grep '^.M' | cut -d " " -f4,5`;do for j in `rpm -qf $i`;do rpm -ql $j --dump | cut -d " " -f1,5,6,7 | grep $i | awk '{print $1}';done;done;));packages=();for i in "${files[@]}"; do package=$(rpm -qf "$i");packages+=("$package"); done;sorted_packages=($(echo "${ids[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '));for j in "${sorted_packages[@]}"; do rpm --setperms "$j"; rpm -setugids "$j"; done;`
 
+## v-72017
+`folders=($(ls -ld $(egrep ':[0-9]{4}' /etc/passwd | cut -d: -f6)|awk '{print $9}'));for i in "${folders[@]}"; do chmod 0750 "$i"; done;`
 
 ## v-72033
-`ls -al /home/*/.* | grep "./" | grep -v "/.:\|/..:\|mozilla"| awk '{print "chmod 0740 "$9";"}'`
+`files=($(ls -al /home/*/.* | grep "./" | grep -v "/.:\|/..:\|mozilla"| awk '{print $9}'));for i in "${files[@]}"; do chmod 0740 "$i";done;`
 
 ## v-72069/72071/72073 (all at once)
 `file=$(find / -name aide.conf 2>/dev/null);cat $file | grep "acl\|xattrs\|sha512";`
