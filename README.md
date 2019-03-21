@@ -12,3 +12,9 @@ Better commands for checking RHEL 7 STIGs
 
 ## v-72089
 `grep -iw log_file /etc/audit/auditd.conf;partsize=$(df -h /var/log/audit | awk '{print $2}');echo "$partsize";grep -iw "space_left" /etc/audit/auditd.conf;`
+
+## v-72211
+`grep "imtcp\|imudp\|imrelp" /etc/rsyslog.conf`
+
+## v-72417
+`rpm -qa | grep "esc-\|authconfig\|pam_pkcs11"`
