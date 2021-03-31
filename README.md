@@ -2,8 +2,8 @@
 Better commands for checking RHEL 7 STIGs
 
 ## v-71849 (produces copy/paste commands to run)
-`files=($(for i in `rpm -Va | grep '^.M' | cut -d " " -f4,5`;do for j in `rpm -qf $i`;do rpm -ql $j --dump | cut -d " " -f1,5,6,7 | grep $i | awk '{print $1}';done;done)); packages=($(for i in "${files[@]}"; do rpm -qf "$i";done;));output="";for j in "${packages[@]}"; do output+="rpm -setperms $j;";output+=$'\n';output+="rpm --setugids $j;";output+=$'\n';done;echo "$output" | sort -d | uniq;
-`
+```files=($(for i in `rpm -Va | grep '^.M' | cut -d " " -f4,5`;do for j in `rpm -qf $i`;do rpm -ql $j --dump | cut -d " " -f1,5,6,7 | grep $i | awk '{print $1}';done;done)); packages=($(for i in "${files[@]}"; do rpm -qf "$i";done;));output="";for j in "${packages[@]}"; do output+="rpm -setperms $j;";output+=$'\n';output+="rpm --setugids $j;";output+=$'\n';done;echo "$output" | sort -d | uniq;
+```
 
 ## v-72017
 `folders=($(ls -ld $(egrep ':[0-9]{4}' /etc/passwd | cut -d: -f6)|awk '{print $9}'));for i in "${folders[@]}"; do chmod 0750 "$i"; done;`
